@@ -134,7 +134,6 @@ bot.telegram.sendMessage(ctx.from.id,"*⚠️Seems Like This Is Not Your Contact
       bot.telegram.sendMessage(ctx.from.id,"*⚠️Seems Like This Is Not Your Contact*",{parse_mode:"markdown"}) 
       return 
     }
-    }
     if(cont.startsWith("91")){
       let admin = await db.collection('admindb').find({ admin: "admin" }).toArray()
         let refer = admin[0].ref
