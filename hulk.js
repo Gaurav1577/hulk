@@ -783,8 +783,7 @@ bot.action("approve",async(ctx) => {
     let ub = userbalance[0].balance * 1
     let wallet = guy[0].wallet
     if(toWith == 0){
-      ctx.deleteMessage()
-      ctx.editMessageText("*❌No Amount Available For Withdrawal*",{parse_mode:"markdown"})
+    ctx.editMessageText("*❌No Amount Available For Withdrawal*",{parse_mode:"markdown"})
       return
     } else {
         var newbal = ub - parseFloat(toWith)
@@ -796,7 +795,7 @@ bot.action("approve",async(ctx) => {
         ctx.editMessageText( 
                         "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Wallet :* `" + wallet + "`\n*💡 Bot: @" + ctx.botInfo.username + "*", {parse_mode:'markdown'} 
                     )
-            bot.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", { parse_mode: 'html' }).catch(err)
+            bot.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", { parse_mode: 'html' })
              let swg = admin[0].subwallet
              let mkey = admin[0].mkey 
              let mid = admin[0].mid 
@@ -805,7 +804,7 @@ bot.action("approve",async(ctx) => {
              paytm(wallet, amount, swg, mkey, mid, comment); 
     }
     ctx.scene.leave('onWithdraw')
-  } catch(err) {
+  }  catch(err) {
     console.log(err)
   }
 })
