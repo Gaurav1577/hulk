@@ -125,10 +125,15 @@ bot.start(async (ctx) => {
 })
 bot.on("contact", async(ctx)=> {
   try {
-    var cont = ctx.update.message.contact.phone_number
-    if (ctx.update.message.forward_from){
-      bot.telegram.sendMessage(ctx.from.id,"*⚠️Seems Like This Is Not Your Contact*",{parse_mode:"markdown"})
-      return
+   if(!ctx.update.message.reply_to_message){
+bot.telegram.sendMessage(ctx.from.id,"*⚠️Seems Like This Is Not Your Contact*",{parse_mode:"markdown"}) 
+ return
+}
+   var cont = ctx.update.message.contact.phone_number 
+    if (ctx.update.message.forward_from){ 
+      bot.telegram.sendMessage(ctx.from.id,"*⚠️Seems Like This Is Not Your Contact*",{parse_mode:"markdown"}) 
+      return 
+    }
     }
     if(cont.startsWith("91")){
       let admin = await db.collection('admindb').find({ admin: "admin" }).toArray()
@@ -355,6 +360,7 @@ bot.hears('📤 Payout', async (ctx) => {
                 if (flag == channel.length) {
                     let userbalance = await db.collection('balance').find({ userID: ctx.from.id }).toArray()
                     let ub = userbalance[0].balance
+                    let toWith = userbalance[0].toWithdraw * 1
                     let data = await db.collection('allUsers').find({ userID: ctx.from.id }).toArray()
                     if (ub < mini_with) {
                         ctx.replyWithMarkdown(
@@ -364,6 +370,9 @@ bot.hears('📤 Payout', async (ctx) => {
                         ctx.replyWithMarkdown(
                             '*⚠️ Set Your Wallet Using : *`🗂 Wallet`', { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
                         )
+                     } else if(toWith > 0){
+                        ctx.replyWithMarkdown("*😐You Already Have A Pending Approval For Withdraw*", { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } })
+                         return
                     } else {
                       let bdata = await    db.collection('WithdrawUsers').find({ userID: ctx.from.id }).toArray()
                       var duration_in_hours;
