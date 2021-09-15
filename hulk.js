@@ -722,7 +722,7 @@ onWithdraw.on('text', async (ctx) => {
                     ctx.scene.leave('onWithdraw')
                     return
                 } else if(ctx.update.message.forward_from){
-                  ctx.replyWithMarkdown("*⛔ No Forward Allowed*", { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
+                        ctx.replyWithMarkdown("*⛔️ No Forward Allowed*", { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } })
                     ctx.scene.leave('onWithdraw')
                     return
                 } else if (isNaN(ctx.message.text)){
@@ -745,10 +745,10 @@ onWithdraw.on('text', async (ctx) => {
                     )
                     ctx.scene.leave('onWithdraw')
                     return
-                } else if (ctx.message.text > 10){
+                } else if (ctx.message.text > 1){
                   ctx.replyWithMarkdown(
 
-                        '*⚠️ Maximum Withdrawal Is 10 ' + currency + '*', { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
+                        '*⚠️ Maximum Withdrawal Is 1 ' + currency + '*', { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
 
                     )
                     ctx.scene.leave('onWithdraw')
