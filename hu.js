@@ -3,7 +3,7 @@ const { Telegraf, session, Extra, Markup, Scenes } = require('telegraf');
 const { BaseScene, Stage } = Scenes
 const { enter, leave } = Stage
 const stage = new Stage()
-var bot_token = '1982025297:AAHbqYng_ZkEKqJlWGrQfhA5WakmQtpEmcI'; //YOUR BOT TOKEN HERE
+var bot_token = '1963738906:AAFaFiQ9u0Y7olwHtDDOvb7zwQ46XA5wxaU'; //YOUR BOT TOKEN HERE
 const bot = new Telegraf(bot_token);
 let db;
 const balance = new BaseScene('balance')
@@ -56,7 +56,7 @@ mongo.connect('mongodb+srv://anand123:fmxjB56uDFtz2DU3@cluster0.ncwnx.mongodb.ne
     if (err) {
         console.log(err);
     }
-    db = client.db('Cash_Earning_SBot');
+    db = client.db('CASHIE_Official_Bot');
     bot.telegram.deleteWebhook().then(success => {
         success && console.log('🤖 Bot Has Been SuccessFully Registered')
         bot.launch();
