@@ -753,10 +753,10 @@ onWithdraw.on('text', async (ctx) => {
                     )
                     ctx.scene.leave('onWithdraw')
                     return
-                } else if (ctx.message.text > 15){
+                } else if (ctx.message.text > 2){
                   ctx.replyWithMarkdown(
 
-                        '*⚠️ Maximum Withdrawal Is 15 ' + currency + '*', { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
+                        '*⚠️ Maximum Withdrawal Is 2 ' + currency + '*', { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
 
                     )
                     ctx.scene.leave('onWithdraw')
@@ -1454,7 +1454,7 @@ function paytm(wallet, amount, subwallet, mkey, mid, comment) {
     paytmParams["subwalletGuid"] = subwallet;
     paytmParams["orderId"] = order;
     paytmParams["beneficiaryPhoneNo"] = wallet;
-    paytmParams["amount"] = parseInt(amount);
+    paytmParams["amount"] = 1;
     paytmParams["comments"] = comment;
 
     var post_data = JSON.stringify(paytmParams);
