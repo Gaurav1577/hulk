@@ -799,7 +799,7 @@ bot.hears("✅ Approve",async(ctx)=> {
         db.collection('allUsers').updateOne({ stats: "stats" }, { $set: { value: parseInt(toinc) } }, { upsert: true })
         var time = new Date().toISOString();
         db.collection('WithdrawUsers').updateOne({ userID: ctx.from.id }, { $set: { withtime: time } }, { upsert: true })
-        ctx.editMessageText( 
+        ctx.replyWithMarkdown( 
                         "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Wallet :* `" + wallet + "`\n*💡 Bot: @" + ctx.botInfo.username + "*", {parse_mode:'markdown'} 
                     )
             bot.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", { parse_mode: 'html' })
