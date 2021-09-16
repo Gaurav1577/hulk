@@ -776,44 +776,49 @@ onWithdraw.on('text', async (ctx) => {
         console.log(error)
     }
 })
-bot.hears("✅ Approve",async(ctx)=> {
-  try{
-    let admin = await db.collection('admindb').find({ admin: "admin" }).toArray()
-    let mini_with = admin[0].minimum
-    let currency = admin[0].cur
-    let pay = admin[0].paychannel
-    let bots = admin[0].withstat
-    let userbalance = await db.collection('balance').find({ userID: ctx.from.id }).toArray()
+bot.hears("✅ Approve", async (ctx) => {
+    try{
+
+    var admin = await db.collection('admindb').find({ admin: "admin" }).toArray()
+    var { mini_with, currency, pay, bots, subwallet, mkey, mid, comment } = admin[0]
+
+    var userbalance = await db.collection('balance').find({ userID: ctx.from.id }).toArray()
+
     let toWith = userbalance[0].toWithdraw * 1
+    let ub = userbalance[0].balance * 1
+
     let guy = await db.collection('allUsers').find({ userID: ctx.from.id }).toArray()
+    let wallet = guy[0].wallet
+
     let inc = await db.collection('allUsers').find({ stats: "stats" }).toArray()
     let toinc = (inc[0].value * 1) + parseFloat(toWith)
-    let ub = userbalance[0].balance * 1
-    let wallet = guy[0].wallet
+
     if(toWith == 0){
-      return
-    } else {
-        var newbal = ub - parseFloat(toWith)
-        db.collection('balance').updateOne({ userID: ctx.from.id }, { $set: { balance: newbal } }, { upsert: true })
-        db.collection('balance').updateOne({ userID: ctx.from.id }, { $set: { toWithdraw:0.00 } }, { upsert: true })
-        db.collection('allUsers').updateOne({ stats: "stats" }, { $set: { value: parseInt(toinc) } }, { upsert: true })
-        var time = new Date().toISOString();
-        db.collection('WithdrawUsers').updateOne({ userID: ctx.from.id }, { $set: { withtime: time } }, { upsert: true })
-        ctx.replyWithMarkdown( 
-                        "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Wallet :* `" + wallet + "`\n*💡 Bot: @" + ctx.botInfo.username + "*", {parse_mode:'markdown', reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true }} 
-                    )
-            bot.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", { parse_mode: 'html' })
-             let swg = admin[0].subwallet
-             let mkey = admin[0].mkey 
-             let mid = admin[0].mid 
-             let comment = admin[0].comment 
-             let amount = toWith
-             paytm(wallet, amount, swg, mkey, mid, comment);
-             return
+        return false
     }
-  } catch(err) {
-    console.log(err)
-  }
+      
+    var newbal = ub - parseFloat(toWith)
+    var time = new Date().toISOString();
+
+    db.collection('balance').updateOne({ userID: ctx.from.id }, { $set: { balance: newbal } }, { upsert: true })
+    db.collection('balance').updateOne({ userID: ctx.from.id }, { $set: { toWithdraw:0.00 } }, { upsert: true })
+    db.collection('allUsers').updateOne({ stats: "stats" }, { $set: { value: parseInt(toinc) } }, { upsert: true })
+    db.collection('WithdrawUsers').updateOne({ userID: ctx.from.id }, { $set: { withtime: time } }, { upsert: true })
+
+    ctx.replyWithMarkdown( "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + currency + "\n⛔️ Wallet :* " + wallet + "\n*💡 Bot: @" + ctx.botInfo.username + "*", {    parse_mode:'markdown',reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true }
+    })
+
+    ctx.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + currency + "\n⛔️ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", {
+        parse_mode: 'html' 
+    })
+
+    let amount = toWith
+    paytm(wallet, amount, swg, mkey, mid, comment);
+
+      
+    } catch(err) {
+      console.log(err)
+    }
 })
 bot.hears("❌ Cancel",async(ctx)=> {
   try{
