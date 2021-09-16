@@ -46,6 +46,8 @@ const mid = new BaseScene('mid')
 stage.register(mid)
 const comment = new BaseScene('comment')
 stage.register(comment)
+const conf = new BaseScene('conf')
+stage.register(conf)
 var regex = new RegExp('.*')
 
 bot.use(session())
@@ -766,6 +768,7 @@ onWithdraw.on('text', async (ctx) => {
                     }
                     db.collection('balance').updateOne({ userID: ctx.from.id }, { $set: { toWithdraw: ctx.message.text } }, { upsert: true })
                     ctx.scene.leave('onWithdraw')
+                    ctx.scene.enter('conf')
             } else {
                 mustjoin(ctx)
             }
@@ -776,9 +779,9 @@ onWithdraw.on('text', async (ctx) => {
         console.log(error)
     }
 })
-bot.hears("✅ Approve", async (ctx) => {
+conf.hears("✅ Approve", async (ctx) => {
     try{
-
+    ctx.scene.leave('conf')
     var admin = await db.collection('admindb').find({ admin: "admin" }).toArray()
     var { mini_with, cur, paychannel, bots, subwallet, mkey, mid, comment } = admin[0]
 
@@ -820,8 +823,9 @@ bot.hears("✅ Approve", async (ctx) => {
       console.log(err)
     }
 })
-bot.hears("❌ Cancel",async(ctx)=> {
+conf.hears("❌ Cancel",async(ctx)=> {
   try{
+     ctx.scene.leave('conf')
      let userbalance = await db.collection('balance').find({ userID: ctx.from.id }).toArray()
     let toWith = userbalance[0].toWithdraw * 1
      if(toWith > 0){
