@@ -616,7 +616,7 @@ bot.hears('🎁 Bonus', async (ctx) => {
     }
 })
 bot.hears('/broadcast', async (ctx) => {
-    if (ctx.from.id == 827167974) {
+    if (ctx.from.id == 827167974|| ctx.from.id == 629210262) {
         ctx.replyWithMarkdown(
             '*📨 Enter Message To Broadcast*', { reply_markup: { keyboard: [['⛔ Cancel']], resize_keyboard: true } }
         )
