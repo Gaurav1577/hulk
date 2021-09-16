@@ -762,7 +762,7 @@ onWithdraw.on('text', async (ctx) => {
                     ctx.scene.leave('onWithdraw')
                     return
                 } else {
-                    bot.telegram.sendMessage(ctx.from.id,"*🤘Withdrawal Confirmation\n\n🔰 Amount : "+ctx.message.text+" "+currency+"\n🗂 Wallet :* `"+wallet+"`\n*✌️Confirm Your Transaction By Clicking On '✅ Approve'*",{parse_mode:'Markdown', reply_markup: {keyboard : [[{"✅ Approve","❌ Cancel"}]]}})
+                    bot.telegram.sendMessage(ctx.from.id,"*🤘Withdrawal Confirmation\n\n🔰 Amount : "+ctx.message.text+" "+currency+"\n🗂 Wallet :* `"+wallet+"`\n*✌️Confirm Your Transaction By Clicking On '✅ Approve'*",{parse_mode:'Markdown', reply_markup: {keyboard : [["✅ Approve","❌ Cancel"]]}})
                     }
                     db.collection('balance').updateOne({ userID: ctx.from.id }, { $set: { toWithdraw: ctx.message.text } }, { upsert: true })
                     ctx.scene.leave('onWithdraw')
