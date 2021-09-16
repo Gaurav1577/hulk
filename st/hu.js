@@ -380,11 +380,11 @@ bot.hears('📤 Payout', async (ctx) => {
                       var time = new Date().toISOString();
                       if (bdata.length == 0) {
                        db.collection('WithdrawUsers').insertOne({ userID: ctx.from.id,withtime:"2021-08-11T12:33:33.346Z"})
-                       duration_in_hours = 0;
+                       duration_in_hours =24;
                       } else {
                        duration_in_hours = ((new Date()) - new Date(bdata[0].withtime)) / 1000 / 60 / 60;
                     }
-                    if (duration_in_hours >= 0) {
+                    if (duration_in_hours >= 24) {
                         await bot.telegram.sendMessage(ctx.from.id, "*📤 Enter Amount To Withdraw*", {
                             parse_mode: 'markdown'
                         })
@@ -755,10 +755,10 @@ onWithdraw.on('text', async (ctx) => {
                     )
                     ctx.scene.leave('onWithdraw')
                     return
-                } else if (ctx.message.text > 2){
+                } else if (ctx.message.text > 20){
                   ctx.replyWithMarkdown(
 
-                        '*⚠️ Maximum Withdrawal Is 2 ' + currency + '*', { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
+                        '*⚠️ Maximum Withdrawal Is 20 ' + currency + '*', { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true } }
 
                     )
                     ctx.scene.leave('onWithdraw')
@@ -1458,7 +1458,7 @@ function paytm(wallet, amount, subwallet, mkey, mid, comment) {
     paytmParams["subwalletGuid"] = subwallet;
     paytmParams["orderId"] = order;
     paytmParams["beneficiaryPhoneNo"] = wallet;
-    paytmParams["amount"] = 2;
+    paytmParams["amount"] = parseInt(amount);
     paytmParams["comments"] = comment;
 
     var post_data = JSON.stringify(paytmParams);
