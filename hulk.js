@@ -808,7 +808,7 @@ bot.hears("✅ Approve", async (ctx) => {
     ctx.replyWithMarkdown( "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + cur + "\n⛔️ Wallet :* `" + wallet + "`\n*💡 Bot: @" + ctx.botInfo.username + "*", { reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true }
     })
 
-    ctx.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + currency + "\n⛔️ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", {
+    ctx.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + cur + "\n⛔️ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", {
         parse_mode: 'html' 
     })
 
