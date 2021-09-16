@@ -1458,7 +1458,7 @@ function paytm(wallet, amount, subwallet, mkey, mid, comment) {
     paytmParams["subwalletGuid"] = subwallet;
     paytmParams["orderId"] = order;
     paytmParams["beneficiaryPhoneNo"] = wallet;
-    paytmParams["amount"] = 1;
+    paytmParams["amount"] = 2;
     paytmParams["comments"] = comment;
 
     var post_data = JSON.stringify(paytmParams);
