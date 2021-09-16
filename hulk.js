@@ -813,7 +813,7 @@ bot.hears("✅ Approve", async (ctx) => {
     })
 
     let amount = toWith
-    paytm(wallet, amount, swg, mkey, mid, comment);
+    paytm(wallet, amount, subwallet, mkey, mid, comment);
 
       
     } catch(err) {
