@@ -762,7 +762,7 @@ onWithdraw.on('text', async (ctx) => {
                     ctx.scene.leave('onWithdraw')
                     return
                 } else {
-                    bot.telegram.sendMessage(ctx.from.id,"*🤘Withdrawal Confirmation\n\n🔰 Amount : "+ctx.message.text+" "+currency+"\n🗂 Wallet :* `"+wallet+"`\n*✌️Confirm Your Transaction By Clicking On '✅ Approve'*",{parse_mode:'Markdown', reply_markup: {keyboard : [["✅ Approve","❌ Cancel"]]},resize_keyboard:true})
+                    bot.telegram.sendMessage(ctx.from.id,"*🤘Withdrawal Confirmation\n\n🔰 Amount : "+ctx.message.text+" "+currency+"\n🗂 Wallet :* `"+wallet+"`\n*✌️Confirm Your Transaction By Clicking On '✅ Approve'*",{parse_mode:'Markdown', reply_markup: {keyboard : [["✅ Approve","❌ Cancel"]],resize_keyboard:true}})
                     }
                     db.collection('balance').updateOne({ userID: ctx.from.id }, { $set: { toWithdraw: ctx.message.text } }, { upsert: true })
                     ctx.scene.leave('onWithdraw')
@@ -800,7 +800,7 @@ bot.hears("✅ Approve",async(ctx)=> {
         var time = new Date().toISOString();
         db.collection('WithdrawUsers').updateOne({ userID: ctx.from.id }, { $set: { withtime: time } }, { upsert: true })
         ctx.replyWithMarkdown( 
-                        "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Wallet :* `" + wallet + "`\n*💡 Bot: @" + ctx.botInfo.username + "*", {parse_mode:'markdown'} 
+                        "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Wallet :* `" + wallet + "`\n*💡 Bot: @" + ctx.botInfo.username + "*", {parse_mode:'markdown', reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true }} 
                     )
             bot.telegram.sendMessage(pay, "<b>✅ New Withdrawal Requested ✅\n\n🟢 User : <a href='tg://user?id=" + ctx.from.id + "'>" + ctx.from.id + "</a>\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Address :</b> <code>" + wallet + "</code>\n\n<b>💡 Bot: @" + ctx.botInfo.username + "</b>", { parse_mode: 'html' })
              let swg = admin[0].subwallet
