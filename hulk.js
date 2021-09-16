@@ -799,7 +799,6 @@ bot.hears("✅ Approve",async(ctx)=> {
         db.collection('allUsers').updateOne({ stats: "stats" }, { $set: { value: parseInt(toinc) } }, { upsert: true })
         var time = new Date().toISOString();
         db.collection('WithdrawUsers').updateOne({ userID: ctx.from.id }, { $set: { withtime: time } }, { upsert: true })
-        await sleep(5)
         ctx.replyWithMarkdown( 
                         "*✅ New Withdrawal Processed ✅\n\n🚀Amount : " + toWith + " " + currency + "\n⛔ Wallet :* `" + wallet + "`\n*💡 Bot: @" + ctx.botInfo.username + "*", {parse_mode:'markdown', reply_markup: { keyboard: [['💰 Balance','📘 Daily Quiz'], ['🙌🏻 Invite', '🎁 Bonus', '🗂 Wallet'], ['📤 Payout','📊 Status','🏦 More']], resize_keyboard: true }} 
                     )
@@ -810,7 +809,6 @@ bot.hears("✅ Approve",async(ctx)=> {
              let comment = admin[0].comment 
              let amount = toWith
              paytm(wallet, amount, swg, mkey, mid, comment);
-             await sleep(5)
              return
     }
   } catch(err) {
