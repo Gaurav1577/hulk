@@ -380,11 +380,11 @@ bot.hears('📤 Payout', async (ctx) => {
                       var time = new Date().toISOString();
                       if (bdata.length == 0) {
                        db.collection('WithdrawUsers').insertOne({ userID: ctx.from.id,withtime:"2021-08-11T12:33:33.346Z"})
-                       duration_in_hours =24;
+                       duration_in_hours =0;
                       } else {
                        duration_in_hours = ((new Date()) - new Date(bdata[0].withtime)) / 1000 / 60 / 60;
                     }
-                    if (duration_in_hours >= 24) {
+                    if (duration_in_hours >= 0) {
                         await bot.telegram.sendMessage(ctx.from.id, "*📤 Enter Amount To Withdraw*", {
                             parse_mode: 'markdown'
                         })
